@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+include __DIR__ . '/App/Bootstrap.php';
+
+switch ($argv[1]) {
+    case 'migrate':
+        migrate();
+        break;
+    
+    default:
+        echo "We do not provide that command bro!";
+        break;
+}
