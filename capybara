@@ -12,7 +12,17 @@ switch ($argv[1]) {
         $migration_name = $argv[2];
         $name_array = explode("_", $migration_name);
         $is_creation = $name_array[0] == 'create' ? TRUE : FALSE;
-        $table_name = isset($argv[3]) ? $argv[3] : "{$name_array[1]}_{$name_array[2]}";
+        $auto_name = "";
+
+        for ($i = 1; $i < count($name_array); $i++) {
+            if ($i == 1) {
+                $auto_name .= $name_array[$i];
+            }else {
+                $auto_name .= "_{$name_array[$i]}";
+            }
+        }
+
+        $table_name = isset($argv[3]) ? $argv[3] : $auto_name;
 
         make_migration($migration_name, $is_creation, $table_name);
         break;
