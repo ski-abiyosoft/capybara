@@ -1,13 +1,11 @@
 <?php
 
-namespace Database;
+namespace Services;
 
-use Database\Implementations\Mysql;
-use stdClass;
+use Connections\Mysql;
+use Interfaces\DatabaseInterface;
 
-include __DIR__ . "/Implementations/Mysql.php";
-
-class Database 
+class Database implements DatabaseInterface
 {
     private $connection;
 
@@ -43,8 +41,16 @@ class Database
      * 
      * @param string $query_string
      */
-    public function exec(string $query_string): void
+    public function exec(string $query_string): bool
     {
-        $this->connection->make_query($query_string);
+        return $this->connection->make_query($query_string);
+    }
+
+    /**
+     * Init new database connection
+     */
+    public function get(): array
+    {
+        return $this->connection->get();
     }
 }

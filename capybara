@@ -1,11 +1,24 @@
 #!/usr/bin/env php
 <?php
 
-include __DIR__ . '/App/Bootstrap.php';
+include __DIR__ . '/Bootstrap.php';
 
 switch ($argv[1]) {
     case 'migrate':
         migrate();
+        break;
+
+    case "make:migration":
+        $migration_name = $argv[2];
+        $name_array = explode("_", $migration_name);
+        $is_creation = $name_array[0] == 'create' ? TRUE : FALSE;
+        $table_name = isset($argv[3]) ? $argv[3] : "{$name_array[1]}_{$name_array[2]}";
+
+        make_migration($migration_name, $is_creation, $table_name);
+        break;
+
+    case 'test':
+        test();
         break;
     
     default:

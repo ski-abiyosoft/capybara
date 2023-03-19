@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Helpers;
+namespace Helpers;
 
 class Table
 {
@@ -143,9 +143,7 @@ class Table
     {
         $this->query_string = substr_replace($this->query_string, "", -1);
 
-        if ($this->is_creation) {
-            $this->query_string .= " )";
-        }
+        $this->query_string .= " )";
 
         return $this->query_string;
     }
