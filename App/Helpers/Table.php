@@ -111,9 +111,9 @@ class Table
      * 
      * @param string $column_name
      */
-    public function float(string $column_name)
+    public function decimal(string $column_name, int $digit = 14, int $precision = 2)
     {
-        $this->query_string .= " $column_name FLOAT";
+        $this->query_string .= " $column_name decimal($digit,$precision),";
     }
 
     /**

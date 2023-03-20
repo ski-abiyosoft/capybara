@@ -60,7 +60,7 @@ Capybara has many built ini method for creating table column such as varchar, in
 |`$table->integer($name)`| Creating `INT` column with given `$name`. |
 |`$table->float($name)`| Creating `FLOAT` column with given `$name`. |
 |`$table->date($name)`| Creating `DATE` column with given `$name`. |
-|`$table->dateTime($name)`| Creating `DATETIME` column with given `$name`. |
+|`$table->datetime($name)`| Creating `DATETIME` column with given `$name`. |
 
 Hope you enjoy it, Bro.
 
