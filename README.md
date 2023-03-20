@@ -7,6 +7,10 @@ Database versioning could be boring, especially when you are a database administ
 
 ## How to Use it
 
+### Installing App
+
+Once you have download this package, we assume that you have installed PHP CLI and Composer in your computer. You can run `composer install`, then you can use this program as you go.
+
 ### Creating Migration File
 
 When you want to make a migration file you can run this command: 
@@ -33,7 +37,7 @@ Schema::new('users', function ($table) {
 })
 ```
 
-## Migrating Database
+### Migrating Database
 
 Once you have made migration file, you can migrate it into your database by using this command:
 
