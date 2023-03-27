@@ -1,7 +1,7 @@
 {
-    "driver": "mysql",
+    "driver": "sqlsrv",
     "host": "localhost",
-    "username": "admin",
-    "password": "root123",
-    "database": "mencoba"
+    "username": "sa",
+    "password": "kinan@server",
+    "database": "rsbrsbydb"
 }

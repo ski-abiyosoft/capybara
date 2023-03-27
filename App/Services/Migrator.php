@@ -2,6 +2,8 @@
 
 namespace Services;
 
+use Facades\Database as DB;
+use Facades\Schema;
 use Interfaces\MigratorInterface;
 use Throwable;
 
@@ -68,37 +70,23 @@ class Migrator implements MigratorInterface
     private function create_migration_table()
     {
         // Creating migrations table
-        $query = "CREATE TABLE migrations (
-            id bigint NOT NULL AUTO_INCREMENT,
-            PRIMARY KEY (id),
-            filename varchar(255)
-        )";
-
-        try {
-            $database = new Database();
-            $database->exec($query);
-        }catch (Throwable $e) {
-            echo "Table migration is exists.";
-        }
+        echo Schema::new('migrations', function ($table) {
+            $table->id();
+            $table->string('filename');
+        });
     }
 
     private function record(string $filename): void
     {
-        $database = new Database();
-        $query_string = "INSERT INTO migrations (filename) VALUES ('$filename')";
-
-        $database->exec($query_string);
+        DB::table('migrations')->insert(['filename' => $filename]);
     }
 
     private function place_cursor()
     {
-        $query = "SELECT filename FROM migrations ORDER BY id DESC LIMIT 1;";
-
-        $database = new Database();
-        $database->exec($query);
-
         // Find the last migrated file
-        $migration = $database->get();
+        $migration = DB::table('migrations')->select()
+                        ->orderBy('id', 'DESC')
+                        ->limit(1)->get();
         $last_migrated_file = isset($migration[0]['filename']) ? $migration[0]['filename'] : '';
 
         $index = array_search($last_migrated_file, $this->files);

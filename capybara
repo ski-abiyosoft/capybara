@@ -31,9 +31,14 @@ if (isset($argv[1])) {
         case 'test':
             App::test();
             break;
+
+        case 'import':
+            $table_name = isset($argv[3]) ? $argv[3] : $argv[2];
+            App::import($argv[2], $table_name);
+            break;
         
         default:
-            echo "We do not provide that command bro!";
+            echo "We do not provide that command, Bro!";
             break;
     }
 }else {

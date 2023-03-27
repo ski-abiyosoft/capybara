@@ -43,6 +43,14 @@ class File implements FileInterface
     }
 
     /**
+     * Read file
+     */
+    public function getStream()
+    {
+        return $this->stream;
+    }
+
+    /**
      * Write into file
      * 
      * @param string $content

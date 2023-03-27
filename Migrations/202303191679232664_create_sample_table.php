@@ -7,6 +7,9 @@ return new Class {
     {
         Schema::new('sample_table', function ($table) {
             // code here
+            $table->id();
+            $table->string('name', 30);
+            $table->date('tanggal_lahir');
         });
     }
 };

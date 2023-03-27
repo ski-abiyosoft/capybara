@@ -45,7 +45,7 @@ Once you have made migration file, you can migrate it into your database by usin
 
 Capybara will make migrations table in your database as a list of migration files that have been migrated. Capybara will make cursor based on this table, so do not delete this table, or Capybara will migrate all files in the Migrations folder.
 
-## Available Function
+#### Available Function
 
 Capybara has many built ini method for creating table column such as varchar, integer, date, etc. We provide some usefull method listed in the table below:
 
@@ -58,9 +58,27 @@ Capybara has many built ini method for creating table column such as varchar, in
 |`$table->mediumText($name)`| Creating `MEDIUM TEXT` column with given `$name`. |
 |`$table->longText($name)`| Creating `LONG TEXT` column with given `$name`. |
 |`$table->integer($name)`| Creating `INT` column with given `$name`. |
-|`$table->float($name)`| Creating `FLOAT` column with given `$name`. |
+|`$table->decimal($name, $length, $precision)`| Creating `DECIMAL` column with given `$name`, `$length`, and `$pecision`. |
 |`$table->date($name)`| Creating `DATE` column with given `$name`. |
 |`$table->datetime($name)`| Creating `DATETIME` column with given `$name`. |
+
+### Inserting data
+
+Sometimes you may not perform a creating or modifying table, but inserting into existing table. This might be happen when your application store a static table as a master table. Static table often used on application setting parameters and there is no GUI to add it into the table.
+
+Thankfully, Capybara can do this operation by using `Database` facade. You can use `Database` facade inside your migration file.
+
+For inserting data into your table you run `Database::table($table_name)->insert($data_set)`. The `$table_name` is the targeted table that you want to insert, while the `$dataset` is associative array with `$key` as table's column while the `$value` is value that you want to insert. Example:
+
+`Database::table('sample_table')->insert(['name' => 'John Doe', 'city' => 'London']);` 
+
+This syntax will insert into sample table with value 'John Doe' on 'name' column and value 'London' on 'city' column.
+
+### Importing data
+
+Capybara also can be used to import data from `.CSV` type file into you table. You can run `php capybara import $filename $table_name` to start an import operation. The `$filename` parameter is the filename inside `CSV` folder, while the `$table_name` is the targeted table in your database. You may not pass the `$table_name` parameter if your filename and targeted table are same. 
+
+Capybara also support bulk import. You can run `php capybara import all` to start migrating all files inside `CSV` folder. When performing bulk import, you must set your `.csv` file name same as your targeted table, or the operation will fail.
 
 Hope you enjoy it, Bro.
 

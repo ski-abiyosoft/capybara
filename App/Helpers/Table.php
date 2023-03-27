@@ -5,12 +5,13 @@ namespace Helpers;
 class Table
 {
     private $query_string;
-    private $is_creation = false;
+    private $db_type;
 
-    public function __construct(string $table_name, bool $is_creation)
+    public function __construct(string $table_name, bool $is_creation, string $db_type)
     {
+        $this->db_type = $db_type;
+
         if ($is_creation) {
-            $this->is_creation = true;
             $this->query_string = "CREATE TABLE $table_name (";
         }else {
             $this->query_string = "ALTER TABLE $table_name ADD (";
@@ -22,9 +23,9 @@ class Table
      * 
      * @param string $table_name
      */
-    public static function create_table(string $table_name)
+    public static function create_table(string $table_name, string $db_type = "mysql")
     {
-        return new self($table_name, true);
+        return new self($table_name, true, $db_type);
     }
 
     /**
@@ -32,17 +33,29 @@ class Table
      * 
      * @param string $table_name
      */
-    public static function modify_table(string $table_name)
+    public static function modify_table(string $table_name, string $db_type = "mysql")
     {
-        return new self($table_name, false);
+        return new self($table_name, false, $db_type);
     }
 
     /**
-     * Creating indentity column
+     * Creating id column and treated as primary key
      */
     public function id()
     {
-        $this->query_string .= " id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id),";
+        if ($this->db_type == 'mysql') {
+            $this->query_string .= " id BIGINT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id),";
+        }else {
+            $this->query_string .= " id BIGINT NOT NULL IDENTITY(1,1) PRIMARY KEY,";
+        }
+    }
+
+    /**
+     * Creating identity column (SQL Server only)
+     */
+    public function identity()
+    {
+        $this->query_string .= " id BIGINT NOT NULL IDENTITY(1,1),";
     }
 
     /**
